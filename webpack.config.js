@@ -5,12 +5,11 @@ const webpack = require('webpack');
 module.exports = {
   entry: {
     app: './src/index.js',
-    'production-dependencies': ['phaser']
   },
 
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'app.bundle.js'
+    filename: '[name].bundle.js'
   },
 
   module: {
@@ -30,10 +29,6 @@ module.exports = {
         type: 'asset/resource',
       },
     ]
-  },
-
-  devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
   },
 
   plugins: [
@@ -62,10 +57,26 @@ module.exports = {
       'typeof WEBGL_RENDERER': JSON.stringify(true)
     }),
 
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'production-dependencies',
-      filename: 'production-dependencies.bundle.js'
-    }),
-  ]
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'production-dependencies',
+    //   filename: 'production-dependencies.bundle.js'
+    // }),
+  ],
+
+  // optimization: {
+  //   splitChunks: {
+  //     cacheGroups: {
+  //       commons: {
+  //         name: 'production-dependencies',
+  //         chunks: 'initial',
+  //         minChunks: 2
+  //       },
+  //     }
+  //   }
+  // },
+
+  devServer: {
+    contentBase: path.resolve(__dirname, 'dist'),
+  },
 
 };
