@@ -20,9 +20,13 @@ export default class GameScene extends Phaser.Scene {
       .setOrigin(0, 1)
       .setCollideWorldBounds(true)
       .setGravityY(5000);
-    this.scoreText = this.add.text(width, 0, '00000', { fill: '#535353', font: '900 35px monospace', resolution: 5 })
-      .setOrigin(1, 0)
-      .setAlpha(0);
+      
+    // this.scoreText = this.add.text(width, 0, "00000", {fill: "#535353", font: '900 35px Courier', resolution: 5})
+    //   .setOrigin(1, 0)
+    //   .setAlpha(0);
+
+    this.scoreText = this.add.text(800, 100, '00000', {fill: "#535353", font: '900 20px Courier', resolution: 5});
+
     // this.scoreText = this.make.text({
     //   x: width,
     //   y: 0,
@@ -47,7 +51,7 @@ export default class GameScene extends Phaser.Scene {
     this.initStartTrigger();
     this.initColliders();
     this.handleInputs();
-    // this.handleScore();
+    this.handleScore();
   }
 
   initColliders() {
