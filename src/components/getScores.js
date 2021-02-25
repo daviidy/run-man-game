@@ -26,7 +26,6 @@ const getScores = (id) => {
         players.removeChild(players.lastChild);
     }
     const newArray = sortArray(array);
-    console.log(newArray);
     for (let i = 0; i < newArray.length; i++) {
         const player = document.createElement('li');
         player.classList.add('list-group-item');
