@@ -9,7 +9,7 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js'
+    filename: '[name].bundle.js',
   },
 
   module: {
@@ -20,9 +20,9 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env']
-          }
-        }
+            presets: ['@babel/preset-env'],
+          },
+        },
       },
       {
         test: /\.css$/i,
@@ -32,7 +32,7 @@ module.exports = {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
       },
-    ]
+    ],
   },
 
   plugins: [
@@ -40,25 +40,25 @@ module.exports = {
       patterns: [
         {
           from: path.posix.join(
-            path.resolve(__dirname, "assets").replace(/\\/g, "/"),
-            "**",
-            "*"
+            path.resolve(__dirname, 'assets').replace(/\\/g, '/'),
+            '**',
+            '*',
           ),
-          //from: path.resolve(__dirname, 'assets'),
+          // from: path.resolve(__dirname, 'assets'),
           to: path.resolve(__dirname, 'dist'),
-          //noErrorOnMissing: true
+          // noErrorOnMissing: true
         },
         {
           from: path.resolve(__dirname, 'index.html'),
-          to: path.resolve(__dirname, 'dist')
-        }
-      ]
+          to: path.resolve(__dirname, 'dist'),
+        },
+      ],
 
     }),
 
     new webpack.DefinePlugin({
       'typeof CANVAS_RENDERER': JSON.stringify(true),
-      'typeof WEBGL_RENDERER': JSON.stringify(true)
+      'typeof WEBGL_RENDERER': JSON.stringify(true),
     }),
 
     // new webpack.optimize.CommonsChunkPlugin({

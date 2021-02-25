@@ -1,4 +1,4 @@
-import Game from './game'
+import Game from './game';
 import './style.css';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -22,11 +22,10 @@ const {
   leaderBoard,
   gameContainer,
   gameButtons,
-  result,
   menu,
   exit,
   playersList,
-  back
+  back,
 } = dom;
 
 if (checkUser()) {
@@ -51,10 +50,8 @@ addUserButton.addEventListener('click', (e) => {
       welcomeUser.innerHTML = `Hello ${user}!`;
       buttonActions.classList.remove('d-none');
     }, 3000);
-    
   }
 });
-
 
 start.addEventListener('click', (e) => {
   e.preventDefault();
@@ -66,7 +63,7 @@ start.addEventListener('click', (e) => {
   menu.addEventListener('click', (e) => {
     e.preventDefault();
     window.game.destroy();
-    const canvas = document.querySelector("canvas");
+    const canvas = document.querySelector('canvas');
     canvas.remove();
     window.game = new Game();
   });
@@ -74,7 +71,7 @@ start.addEventListener('click', (e) => {
   exit.addEventListener('click', (e) => {
     e.preventDefault();
     window.game.destroy();
-    const canvas = document.querySelector("canvas");
+    const canvas = document.querySelector('canvas');
     canvas.remove();
     buttonActions.classList.remove('d-none');
     gameButtons.classList.add('d-none');
@@ -97,5 +94,4 @@ leaderBoard.addEventListener('click', (e) => {
   });
 });
 
-
-//window.game = new Game();
+// window.game = new Game();

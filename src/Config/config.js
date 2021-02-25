@@ -1,3 +1,5 @@
+/* global Phaser */
+
 import 'phaser';
 
 export default {
@@ -10,7 +12,7 @@ export default {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false
-    }
-  }
+      debug: false,
+    },
+  },
 };

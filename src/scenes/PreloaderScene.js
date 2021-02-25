@@ -1,17 +1,20 @@
+/* global Phaser */
+/* eslint radix: 0 */
+
 import 'phaser';
 
 export default class PreloaderScene extends Phaser.Scene {
-  constructor () {
+  constructor() {
     super('Preloader');
   }
 
-  init () {
+  init() {
     this.readyCount = 0;
   }
 
-  preload () {
+  preload() {
     // add logo image
-    const image = this.add.image(400, 200, 'logo');
+    this.add.image(400, 200, 'logo');
 
     // display progress bar
     const progressBar = this.add.graphics();
@@ -19,16 +22,16 @@ export default class PreloaderScene extends Phaser.Scene {
     progressBox.fillStyle(0x222222, 0.8);
     progressBox.fillRect(240, 270, 320, 50);
 
-    const width = this.cameras.main.width;
-    const height = this.cameras.main.height;
+    const { width } = this.cameras.main;
+    const { height } = this.cameras.main;
     const loadingText = this.make.text({
       x: width / 2,
       y: height / 2 - 50,
       text: 'Loading...',
       style: {
         font: '20px courier',
-        fill: '#ffffff'
-      }
+        fill: '#ffffff',
+      },
     });
     loadingText.setOrigin(0.5, 0.5);
 
@@ -38,8 +41,8 @@ export default class PreloaderScene extends Phaser.Scene {
       text: '0%',
       style: {
         font: '18px courier',
-        fill: '#ffffff'
-      }
+        fill: '#ffffff',
+      },
     });
     percentText.setOrigin(0.5, 0.5);
 
@@ -49,33 +52,33 @@ export default class PreloaderScene extends Phaser.Scene {
       text: '',
       style: {
         font: '18px courier',
-        fill: '#ffffff'
-      }
+        fill: '#ffffff',
+      },
     });
     assetText.setOrigin(0.5, 0.5);
 
     // update progress bar
-    this.load.on('progress', function (value) {
-      percentText.setText(parseInt(value * 100) + '%');
+    this.load.on('progress', (value) => {
+      percentText.setText(`${parseInt(value * 100)}%`);
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 1);
       progressBar.fillRect(250, 280, 300 * value, 30);
     });
 
     // update file progress text
-    this.load.on('fileprogress', function (file) {
-      assetText.setText('Loading asset: ' + file.key);
+    this.load.on('fileprogress', (file) => {
+      assetText.setText(`Loading asset: ${file.key}`);
     });
 
     // remove progress bar when complete
-    this.load.on('complete', function () {
+    this.load.on('complete', () => {
       progressBar.destroy();
       progressBox.destroy();
       loadingText.destroy();
       percentText.destroy();
       assetText.destroy();
       this.ready();
-    }.bind(this));
+    });
 
     this.timedEvent = this.time.delayedCall(3000, this.ready, [], this);
 
@@ -110,7 +113,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('enemy-fly-6', './assets/bird/frame-6.png');
     this.load.image('enemy-fly-7', './assets/bird/frame-7.png');
     this.load.image('enemy-fly-8', './assets/bird/frame-8.png');
-    
+
     this.load.image('enemy-bird', './assets/bird.png');
 
     // this.load.spritesheet('man', './assets/man-run.png', {
@@ -123,20 +126,19 @@ export default class PreloaderScene extends Phaser.Scene {
     //   frameHeight: 77
     // });
 
-    this.load.image('obsticle-1', 'assets/cactuses_small_1.png')
-    this.load.image('obsticle-2', 'assets/cactuses_small_2.png')
-    this.load.image('obsticle-3', 'assets/cactuses_small_3.png')
-    this.load.image('obsticle-4', 'assets/cactuses_big_1.png')
-    this.load.image('obsticle-5', 'assets/cactuses_big_2.png')
-    this.load.image('obsticle-6', 'assets/cactuses_big_3.png')
-
+    this.load.image('obsticle-1', 'assets/cactuses_small_1.png');
+    this.load.image('obsticle-2', 'assets/cactuses_small_2.png');
+    this.load.image('obsticle-3', 'assets/cactuses_small_3.png');
+    this.load.image('obsticle-4', 'assets/cactuses_big_1.png');
+    this.load.image('obsticle-5', 'assets/cactuses_big_2.png');
+    this.load.image('obsticle-6', 'assets/cactuses_big_3.png');
   }
 
-  ready () {
+  ready() {
     this.scene.start('Title');
-    this.readyCount++;
+    this.readyCount += 1;
     if (this.readyCount === 2) {
       this.scene.start('Title');
     }
   }
-};
+}

@@ -16,7 +16,7 @@ const domManip = () => {
   const playersList = document.getElementById('playersList');
   const players = document.getElementById('players');
   const back = document.getElementById('back');
-  
+  const alert = document.getElementById('alert');
 
   return {
     newUserContainer,
@@ -35,7 +35,8 @@ const domManip = () => {
     exit,
     playersList,
     players,
-    back
+    back,
+    alert,
   };
 };
 
