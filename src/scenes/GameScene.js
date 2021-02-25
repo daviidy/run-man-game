@@ -12,6 +12,10 @@ export default class GameScene extends Phaser.Scene {
     this.respawnTime = 0;
     this.score = 0;
 
+    this.jumpSound = this.sound.add('jump', {volume: 0.2});
+    this.hitSound = this.sound.add('hit', {volume: 0.2});
+    this.reachSound = this.sound.add('reach', {volume: 0.2});
+
     // trigger for starting game 
     this.startTrigger = this.physics.add.sprite(0, 200).setOrigin(0, 1).setImmovable();
 
@@ -19,28 +23,32 @@ export default class GameScene extends Phaser.Scene {
     this.man = this.physics.add.sprite(0, height, 'man-idle')
       .setOrigin(0, 1)
       .setCollideWorldBounds(true)
+      .setBodySize(44, 244)
+      .setDepth(1)
       .setGravityY(5000);
-      
-    // this.scoreText = this.add.text(width, 0, "00000", {fill: "#535353", font: '900 35px Courier', resolution: 5})
-    //   .setOrigin(1, 0)
-    //   .setAlpha(0);
 
-    this.scoreText = this.add.text(800, 100, '00000', {fill: "#535353", font: '900 20px Courier', resolution: 5});
+    this.scoreText = this.add
+      .text(width, 0, '00000', {fill: "#535353", font: '900 20px Courier', resolution: 5})
+      .setOrigin(1,0)
+      .setAlpha(0);
 
-    // this.scoreText = this.make.text({
-    //   x: width,
-    //   y: 0,
-    //   text: '00000',
-    //   style: {
-    //     font: '900 35px monospace',
-    //     fill: '#535353',
-    //     resolution: 5
-    //   }
-    // });
+    this.highScoreText = this.add
+      .text(0, 0, '00000', {fill: "#535353", font: '900 20px Courier', resolution: 5})
+      .setOrigin(1,0)
+      .setAlpha(0);
     
     this.gameOverScreen = this.add.container(width / 2, height / 2 - 50).setAlpha(0);
     this.gameOverText = this.add.image(0, 0, 'game-over');
     this.restart = this.add.image(0, 80, 'restart').setInteractive();
+
+    this.environment = this.add.group();
+      this.environment.addMultiple([
+        this.add.image(width / 2, 300, 'cloud'),
+        this.add.image(width - 80, 350, 'cloud'),
+        this.add.image((width / 1.3), 400, 'cloud')
+      ]);
+
+    this.environment.setAlpha(0);
 
     this.gameOverScreen.add([
       this.gameOverText, this.restart
@@ -56,6 +64,16 @@ export default class GameScene extends Phaser.Scene {
 
   initColliders() {
     this.physics.add.collider(this.man, this.obsticles, () => {
+
+      this.highScoreText.x = this.scoreText.x - this.scoreText.width - 20;
+
+      const highScore = this.highScoreText.text.substr(this.highScoreText.text.length - 5);
+      const newScore = Number(this.scoreText.text) > Number(highScore) ? this.scoreText.text : highScore;
+
+      this.highScoreText.setText('HIGH ' + newScore);
+      this.highScoreText.setAlpha(1);
+
+
       this.physics.pause();
       this.isGameRunning = false;
       this.anims.pauseAll();
@@ -63,6 +81,8 @@ export default class GameScene extends Phaser.Scene {
       this.respawnTime = 0;
       this.gameSpeed = 10;
       this.gameOverScreen.setAlpha(1);
+      this.score = 0;
+      this.hitSound.play();
     }, null, this);
   }
 
@@ -92,6 +112,9 @@ export default class GameScene extends Phaser.Scene {
             this.ground.width = width;
             this.isGameRunning = true;
             this.man.setVelocityX(0);
+            // show scores and environment (clouds)
+            this.scoreText.setAlpha(1);
+            this.environment.setAlpha(1);
             startEvent.remove();
           }
         }
@@ -138,13 +161,6 @@ export default class GameScene extends Phaser.Scene {
       frameRate: 6,
       repeat: -1
     })
-
-    // this.anims.create({
-    //   key: 'enemy-fly-anim',
-    //   frames: this.anims.generateFrameNumbers('enemy-bird', {start: 0, end: 1}),
-    //   frameRate: 6,
-    //   repeat: -1
-    // })
   }
 
   handleScore() {
@@ -156,7 +172,20 @@ export default class GameScene extends Phaser.Scene {
         if (!this.isGameRunning) { return; }
 
         this.score++;
-        this.gameSpeed += 0.01
+        this.gameSpeed += 0.01;
+
+        if (this.score % 100 === 0) {
+          this.reachSound.play();
+
+          // animation of the score text when hitting multiple of 100
+          this.tweens.add({
+            targets: this.scoreText,
+            duration: 100,
+            repeat: 3,
+            alpha: 0,
+            yoyo: true
+          })
+        }
 
 
         const score = Array.from(String(this.score), Number);
@@ -183,18 +212,20 @@ export default class GameScene extends Phaser.Scene {
     })
 
     this.input.keyboard.on('keydown-SPACE', () => {
-      if (!this.man.body.onFloor()) {
+      if (!this.man.body.onFloor() || this.man.body.velocity.x > 0) {
         return;
       }
+
+      this.jumpSound.play();
       this.man.body.height = 244;
       this.man.body.offset.y = 0;
 
       this.man.setVelocityY(-1800);
-      console.log(this.man.body.height);
+      this.man.setTexture('man-idle', 0);
     });
 
     this.input.keyboard.on('keydown-DOWN', () => {
-      if (!this.man.body.onFloor()) {
+      if (!this.man.body.onFloor() || !this.isGameRunning) {
         return;
       }
       this.man.body.height = 158;
@@ -215,7 +246,6 @@ export default class GameScene extends Phaser.Scene {
 
     let obsticle;
     if (obsticleNum > 6) {
-      console.log('obstacle > 6');
       const enemyHeight = [60, 80];
       obsticle = this.obsticles.create(this.game.config.width + distance, this.game.config.height - enemyHeight[Math.floor(Math.random() * 2)], 'enemy-bird')
         .setOrigin(0, 1);
@@ -236,6 +266,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.ground.tilePositionX += this.gameSpeed;
     Phaser.Actions.IncX(this.obsticles.getChildren(), -this.gameSpeed);
+    Phaser.Actions.IncX(this.environment.getChildren(), - 0.5);
 
     this.respawnTime += delta * this.gameSpeed * 0.08;
 
@@ -246,8 +277,13 @@ export default class GameScene extends Phaser.Scene {
 
     this.obsticles.getChildren().forEach(obsticle => {
       if (obsticle.getBounds().right < 0) {
-        // this.obsticles.killAndHide(obsticle);
         obsticle.destroy();
+      }
+    })
+
+    this.environment.getChildren().forEach(env => {
+      if (env.getBounds().right < 0) {
+        env.x = this.game.config.width + 30;
       }
     })
 

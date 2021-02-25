@@ -12,44 +12,43 @@ export default class PreloaderScene extends Phaser.Scene {
   preload () {
     // add logo image
     const image = this.add.image(400, 200, 'logo');
-    image.scale = 0.3;
 
     // display progress bar
-    var progressBar = this.add.graphics();
-    var progressBox = this.add.graphics();
+    const progressBar = this.add.graphics();
+    const progressBox = this.add.graphics();
     progressBox.fillStyle(0x222222, 0.8);
     progressBox.fillRect(240, 270, 320, 50);
 
-    var width = this.cameras.main.width;
-    var height = this.cameras.main.height;
-    var loadingText = this.make.text({
+    const width = this.cameras.main.width;
+    const height = this.cameras.main.height;
+    const loadingText = this.make.text({
       x: width / 2,
       y: height / 2 - 50,
       text: 'Loading...',
       style: {
-        font: '20px monospace',
+        font: '20px courier',
         fill: '#ffffff'
       }
     });
     loadingText.setOrigin(0.5, 0.5);
 
-    var percentText = this.make.text({
+    const percentText = this.make.text({
       x: width / 2,
       y: height / 2 - 5,
       text: '0%',
       style: {
-        font: '18px monospace',
+        font: '18px courier',
         fill: '#ffffff'
       }
     });
     percentText.setOrigin(0.5, 0.5);
 
-    var assetText = this.make.text({
+    const assetText = this.make.text({
       x: width / 2,
       y: height / 2 + 50,
       text: '',
       style: {
-        font: '18px monospace',
+        font: '18px courier',
         fill: '#ffffff'
       }
     });
@@ -83,7 +82,6 @@ export default class PreloaderScene extends Phaser.Scene {
     // load assets needed in our game
     this.load.image('blueButton1', './assets/ui/blue_button02.png');
     this.load.image('blueButton2', './assets/ui/blue_button03.png');
-    this.load.image('phaserLogo', './assets/logo.png');
     this.load.image('box', './assets/ui/grey_box.png');
     this.load.image('checkedBox', './assets/ui/blue_boxCheckmark.png');
     this.load.audio('bgMusic', './assets/TownTheme.mp3');

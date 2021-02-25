@@ -6,7 +6,7 @@ export default class BootScene extends Phaser.Scene {
   }
 
   preload () {
-    this.load.image('logo', './assets/ps5_logo.jpg');
+    this.load.image('logo', './assets/run_man.png');
   }
 
   create () {
