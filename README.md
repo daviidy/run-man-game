@@ -44,7 +44,7 @@ Our project can be found at https://github.com/daviidy/rpg-game
 
 ## Live Demo
 
-You can find the demo [here](https://daviidy.github.io/to-do-list/)
+You can find the demo [here](https://nostalgic-perlman-e0971f.netlify.app/)
 
 
 ## To run the project in local
