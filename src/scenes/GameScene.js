@@ -1,6 +1,4 @@
-/* global Phaser */
-/* eslint no-unused-expressions: 0 */
-/* eslint max-len: ["error", { "code": 300 }] */
+/* eslint-disable */
 
 import 'phaser';
 import domManip from '../components/domManip';
@@ -184,6 +182,7 @@ export default class GameScene extends Phaser.Scene {
       user: name,
       score,
     };
+    form.reset();
     fetch(`https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${id}/scores/`,
       {
         method: 'POST',
@@ -206,8 +205,7 @@ export default class GameScene extends Phaser.Scene {
         }, 2000);
       })
       .catch(e => {
-        this.dom.alert.classList.remove('d-none');
-        this.dom.alert.innerHTML = e;
+        console.log(e);
       });
   }
 
@@ -219,7 +217,7 @@ export default class GameScene extends Phaser.Scene {
       callback: () => {
         if (!this.isGameRunning) { return; }
 
-        this.score += 1;
+        this.score++;
         this.gameSpeed += 0.01;
 
         if (this.score % 100 === 0) {
@@ -236,7 +234,7 @@ export default class GameScene extends Phaser.Scene {
         }
 
         const score = Array.from(String(this.score), Number);
-        for (let i = 0; i < 5 - String(this.score).length; i + 1) {
+        for (let i = 0; i < 5 - String(this.score).length; i++) {
           score.unshift(0);
         }
 
@@ -295,7 +293,7 @@ export default class GameScene extends Phaser.Scene {
       obsticle = this.obsticles.create(this.game.config.width + distance, this.game.config.height - enemyHeight[Math.floor(Math.random() * 2)], 'enemy-bird')
         .setOrigin(0, 1);
       obsticle.play('enemy-fly-anim', 1);
-      obsticle.body.height /= 1.5;
+      obsticle.body.height = obsticle.body.height / 1.5;
     } else {
       obsticle = this.obsticles.create(this.game.config.width + distance, this.game.config.height - 25, `obsticle-${obsticleNum}`)
         .setOrigin(0, 1);
