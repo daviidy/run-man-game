@@ -23,7 +23,7 @@ canvas {
 
 input {
   width: 50%;
-  box-shadow: 3px 10px 23px 0px rgb(0 0 0 / 75%);
+  box-shadow: 3px 10px 23px 0 rgb(0 0 0 / 75%);
   border-radius: 5px;
   height: 53px;
   font-size: 2rem;
