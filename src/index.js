@@ -5,8 +5,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import domManip from './components/domManip';
 import addUser from './components/addUser';
 import checkUser from './components/checkUser';
+import getScores from './components/getScores';
 
 const dom = domManip();
+const id = 'ylaQJIceB2zpscPcvxIj';
 
 const {
   newUserContainer,
@@ -15,12 +17,23 @@ const {
   form,
   addUserButton,
   buttonActions,
-  welcomeUser
+  welcomeUser,
+  start,
+  leaderBoard,
+  gameContainer,
+  gameButtons,
+  result,
+  menu,
+  exit,
+  playersList,
+  back
 } = dom;
 
 if (checkUser()) {
   newUserContainer.classList.add('d-none');
+  welcomeUser.classList.remove('d-none');
   buttonActions.classList.remove('d-none');
+  loading.classList.add('d-none');
   welcomeUser.innerHTML = `Hello ${localStorage.getItem('current_player')}!`;
 }
 
@@ -34,11 +47,54 @@ addUserButton.addEventListener('click', (e) => {
     const user = addUser(nameValue);
     setTimeout(() => {
       loading.classList.add('d-none');
-      buttonActions.classList.remove('d-none');
+      welcomeUser.classList.remove('d-none');
       welcomeUser.innerHTML = `Hello ${user}!`;
+      buttonActions.classList.remove('d-none');
     }, 3000);
     
   }
+});
+
+
+start.addEventListener('click', (e) => {
+  e.preventDefault();
+  buttonActions.classList.add('d-none');
+  gameButtons.classList.remove('d-none');
+  gameContainer.classList.remove('d-none');
+  window.game = new Game();
+
+  menu.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.game.destroy();
+    const canvas = document.querySelector("canvas");
+    canvas.remove();
+    window.game = new Game();
+  });
+
+  exit.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.game.destroy();
+    const canvas = document.querySelector("canvas");
+    canvas.remove();
+    buttonActions.classList.remove('d-none');
+    gameButtons.classList.add('d-none');
+    gameContainer.classList.add('d-none');
+  });
+});
+
+leaderBoard.addEventListener('click', (e) => {
+  e.preventDefault();
+  buttonActions.classList.add('d-none');
+  loading.classList.remove('d-none');
+  playersList.classList.remove('d-none');
+  getScores(id);
+
+  back.addEventListener('click', (e) => {
+    e.preventDefault();
+    buttonActions.classList.remove('d-none');
+    playersList.classList.add('d-none');
+    back.classList.add('d-none');
+  });
 });
 
 

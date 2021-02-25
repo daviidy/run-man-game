@@ -1,4 +1,5 @@
 import 'phaser';
+import domManip from '../components/domManip';
 
 export default class GameScene extends Phaser.Scene {
   constructor () {
@@ -6,6 +7,9 @@ export default class GameScene extends Phaser.Scene {
   };
 
   create () {
+    this.dom = domManip();
+
+    this.id = 'ylaQJIceB2zpscPcvxIj';
     this.gameSpeed = 10;
     const { height, width } = this.game.config;
     this.isGameRunning = false;
@@ -79,8 +83,16 @@ export default class GameScene extends Phaser.Scene {
       this.anims.pauseAll();
       this.man.setTexture('man-idle');
       this.respawnTime = 0;
+      this.environment.setAlpha(0);
       this.gameSpeed = 10;
+      this.gameOverScreen.remove(this.restart);
       this.gameOverScreen.setAlpha(1);
+      // send score to leaderboard
+      this.addScore(
+        localStorage.getItem('current_player'),
+        this.score,
+        this.id
+      );
       this.score = 0;
       this.hitSound.play();
     }, null, this);
@@ -163,6 +175,43 @@ export default class GameScene extends Phaser.Scene {
     })
   }
 
+  addScore(name, score, id) {
+    this.dom.gameButtons.classList.add('d-none');
+    this.dom.loading.classList.remove('d-none');
+    let content = {
+      "user": name,
+      "score": score
+    };
+    form.reset();
+    fetch("https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/"+id+"/scores/",
+      {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+        'Content-Type': 'application/json'
+      },
+        body: JSON.stringify(content)
+      })
+    .then(function(response) {
+      return response.json();
+    })
+    .then((response) => {
+      this.dom.loading.classList.add('d-none');
+      this.dom.result.classList.remove('d-none');
+      this.dom.result.innerHTML = response.result;
+
+      setTimeout(() => {
+        this.dom.result.classList.add('d-none');
+        this.dom.gameButtons.classList.remove('d-none');
+        this.gameOverScreen.add(this.restart);
+      }, 2000);
+    })
+    .catch(e => {
+      console.log(e);
+
+    });
+  }
+
   handleScore() {
     this.time.addEvent({
       delay: 1000/10,
@@ -208,6 +257,7 @@ export default class GameScene extends Phaser.Scene {
       this.obsticles.clear(true, true);
       this.isGameRunning = true;
       this.gameOverScreen.setAlpha(0);
+      this.environment.setAlpha(1);
       this.anims.resumeAll();
     })
 

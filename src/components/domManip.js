@@ -6,6 +6,16 @@ const domManip = () => {
   const addUserButton = document.getElementById('createUser');
   const buttonActions = document.getElementById('buttonActions');
   const welcomeUser = document.getElementById('welcomeUser');
+  const start = document.getElementById('start');
+  const leaderBoard = document.getElementById('leaderBoard');
+  const gameContainer = document.getElementById('gameContainer');
+  const gameButtons = document.getElementById('gameButtons');
+  const result = document.getElementById('result');
+  const menu = document.getElementById('menu');
+  const exit = document.getElementById('exit');
+  const playersList = document.getElementById('playersList');
+  const players = document.getElementById('players');
+  const back = document.getElementById('back');
   
 
   return {
@@ -15,7 +25,17 @@ const domManip = () => {
     form,
     addUserButton,
     buttonActions,
-    welcomeUser
+    welcomeUser,
+    start,
+    leaderBoard,
+    gameContainer,
+    gameButtons,
+    result,
+    menu,
+    exit,
+    playersList,
+    players,
+    back
   };
 };
 
