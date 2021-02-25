@@ -1,7 +1,40 @@
 <html>
   <head>
   </head>
-  <body>
+  <body class="bg-color-primary">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-12">
+          <img src="./assets/logo_transparent.png" alt="Game logo" class="img-fluid">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <form id="form">
+            <div class="form-group">
+              <label class="font-weight-bold" for="name">Username:</label>
+              <input type="text" class="form-control" placeholder="eg. dave" id="name">
+            </div>
+            <button class="rounded button-color font-weight-bold text-white" id="createUser">Submit</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="row text-center mt-5 button-actions">
+          <div class="col-12 col-md-6 text-right">
+            <a class="rounded pl-5 pr-5 pt-3 pb-3 font-weight-bold text-white button-color">
+              Start
+            </a>
+          </div>
+          <div class="col-12 col-md-6 text-left">
+            <a class="rounded pl-5 pr-5 pt-3 pb-3 font-weight-bold text-white button-color">
+              Leaderboard
+            </a>
+          </div>
+        </div>
+    </div>
+    <div id="game-container" class="d-none"></div>
     <script src="app.bundle.js"></script>
   </body>
 </html>

@@ -8,7 +8,7 @@ import OptionsScene from './Scenes/OptionsScene';
 import CreditsScene from './Scenes/CreditsScene';
 import Model from './Model';
 
-class Game extends Phaser.Game {
+export default class Game extends Phaser.Game {
   constructor () {
     super(config);
     const model = new Model();
@@ -21,6 +21,4 @@ class Game extends Phaser.Game {
     this.scene.add('Game', GameScene);
     this.scene.start('Boot');
   }
-}
-
-window.game = new Game();
+};
