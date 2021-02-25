@@ -9,7 +9,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" id="newUserContainer">
         <div class="col-12">
           <form id="form">
             <div class="form-group">
@@ -19,20 +19,24 @@
             <button class="rounded button-color font-weight-bold text-white" id="createUser">Submit</button>
           </form>
         </div>
+        <div class="col-12">
+          <div class="spinner-border d-none" id="spinner"></div>
+        </div>
       </div>
 
-      <div class="row text-center mt-5 button-actions">
-          <div class="col-12 col-md-6 text-right">
-            <a class="rounded pl-5 pr-5 pt-3 pb-3 font-weight-bold text-white button-color">
-              Start
-            </a>
-          </div>
-          <div class="col-12 col-md-6 text-left">
-            <a class="rounded pl-5 pr-5 pt-3 pb-3 font-weight-bold text-white button-color">
-              Leaderboard
-            </a>
-          </div>
+      <div class="row text-center mt-5 d-none" id="buttonActions">
+        <div class="col-12 mb-5 font-weight-bold" id="welcomeUser"></div>
+        <div class="col-12 col-md-6 text-right">
+          <a class="rounded pl-5 pr-5 pt-3 pb-3 font-weight-bold text-white button-color">
+            Start
+          </a>
         </div>
+        <div class="col-12 col-md-6 text-left">
+          <a class="rounded pl-5 pr-5 pt-3 pb-3 font-weight-bold text-white button-color">
+            Leaderboard
+          </a>
+        </div>
+      </div>
     </div>
     <div id="game-container" class="d-none"></div>
     <script src="app.bundle.js"></script>
