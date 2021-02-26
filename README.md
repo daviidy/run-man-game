@@ -11,6 +11,10 @@ In this project, we built a turn-based RPG game using Phaser and JavaScript.
 - Bootstrap 4
 - Phaser 3
 
+## Game Design Documents
+
+[Click here to see the document](game_design.pdf)
+
 ## 🚀 Our Project
 
 Our project can be found at https://github.com/daviidy/rpg-game
@@ -36,7 +40,6 @@ Our project can be found at https://github.com/daviidy/rpg-game
     -**Play**: to play the game
     -**Options**: for the settings
     -**Credits**: to see the credits
-![leaderboard](./leaderboard.png)
 
 - If you click on the play button you will see the game scene. To start playing, click on `SPACE`
 ![start_game](./start_game.png)
