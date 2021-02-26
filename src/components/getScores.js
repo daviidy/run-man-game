@@ -35,7 +35,6 @@ const getScores = (id) => {
         const score = document.createElement('span');
         user.innerHTML = newArray[i].user+": ";
         score.innerHTML = newArray[i].score;
-        // player.innerHTML = newArray[i].user+": "+ newArray[i].score;
         player.appendChild(user);
         player.appendChild(score);
         players.appendChild(player);
