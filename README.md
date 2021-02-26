@@ -1,10 +1,10 @@
 # Todo-List
-In this project we built a turn-based RPG game using Phaser and JavaScript.
+In this project, we built a turn-based RPG game using Phaser and JavaScript.
 
 ## Project screenshot
 ![screenshot](./screenshot.png)
 
-## 🔨 Built in
+## 🔨 Built-in
 
 - JavaScript
 - Webpack
@@ -31,7 +31,7 @@ Our project can be found at https://github.com/daviidy/rpg-game
 
 - If you click on the leaderboard button, you will see all the players scores
     - **How to play**: click this button to see instructions for the game
-    - **Menu**: this button allows you to come back to the first screen of the game (where you have the play, options and credits buttons)
+    - **Menu**: this button allows you to come back to the first screen of the game (where you have the play, options, and credits buttons)
     -**Exit**: to exit and go back to the page where you have the start and the leaderboard buttons
     -**Play**: to play the game
     -**Options**: for the settings
@@ -49,7 +49,7 @@ You can find the demo [here](https://nostalgic-perlman-e0971f.netlify.app/)
 
 ## To run the project in local
 
-- make sure you have have NodeJS and NPM installed in your computer
+- make sure you have NodeJS and NPM installed on your computer
 - clone the repository from here [repo link](https://github.com/daviidy/rpg-game)
 - navigate in your terminal to the folder `rpg-game`
 - run `npm install`
@@ -74,7 +74,7 @@ The majority of the assets is from https://opengameart.org/
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!
+Contributions, issues, and feature requests are welcome!
 
 ## Show your support
 
