@@ -1,48 +1,42 @@
 /* eslint-disable */
 
-import domManip from './domManip';
-import sortArray from './sortArray'
+const getScores = async () => {
+    const id = 'ylaQJIceB2zpscPcvxIj';
+    try {
+      const result = await fetch("https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/"+id+"/scores/",
+        {
+            mode: 'cors'
+        }
+      );
 
-const getScores = (id) => {
-    const dom = domManip();
+      const response = await result.json();
+      return response.result;
 
-    const {
-      players,
-      loading,
-      back,
-    } = dom;
-
-    
-    fetch("https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/"+id+"/scores/",
-    {
-        mode: 'cors'
-    })
-    .then(function(response) {
-    return response.json();
-    })
-    .then(function(response) {
-    const array = response.result;
-    loading.classList.add('d-none');
-    back.classList.remove('d-none');
-    while (players.firstChild) {
-        players.removeChild(players.lastChild);
+    } 
+    catch (e) {
+      return e;
     }
-    const newArray = sortArray(array);
-    for (let i = 0; i < newArray.length; i++) {
-        const player = document.createElement('li');
-        player.classList.add('list-group-item');
-        const user = document.createElement('strong');
-        const score = document.createElement('span');
-        user.innerHTML = newArray[i].user+": ";
-        score.innerHTML = newArray[i].score;
-        player.appendChild(user);
-        player.appendChild(score);
-        players.appendChild(player);
-    }
-    })
-    .catch(e => {
-    console.log(e);
-    });
+
 }
+
+
+
+// const getScores = (id) => {
+    
+//     fetch("https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/"+id+"/scores/",
+//     {
+//         mode: 'cors'
+//     })
+//     .then(function(response) {
+//     return response.json();
+//     })
+//     .then(function(response) {
+//     return response.result;
+//     })
+//     .catch(e => {
+//     return e;
+//     });
+// }
+
 
 export default getScores
