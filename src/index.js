@@ -1,3 +1,4 @@
+/* eslint-disable */
 import 'regenerator-runtime/runtime';
 import Game from './game';
 import './style.css';

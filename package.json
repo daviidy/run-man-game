@@ -6,8 +6,7 @@
   "jest": {
     "automock": false,
     "setupFiles": [
-      "jest-localstorage-mock",
-      "./setupJest.js"
+      "jest-localstorage-mock"
     ]
   },
   "scripts": {
